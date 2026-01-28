@@ -1,0 +1,14 @@
+PS C:\Users\leogo\Downloads\ibm docs\EXPRESS\expressBookReviews-main\final_project> curl.exe http://localhost:5000/isbn/1
+{
+    "author": "Chinua Achebe",
+    "title": "Things Fall Apart",
+    "reviews": {}
+}
+PS C:\Users\leogo\Downloads\ibm docs\EXPRESS\expressBookReviews-main\final_project> curl.exe http://localhost:5000/isbn/5
+{
+    "author": "Unknown",
+    "title": "The Book Of Job",
+    "reviews": {}
+}
+PS C:\Users\leogo\Downloads\ibm docs\EXPRESS\expressBookReviews-main\final_project> curl.exe http://localhost:5000/isbn/999
+{"message":"Book not found"}

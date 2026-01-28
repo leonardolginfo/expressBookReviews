@@ -1,0 +1,209 @@
+================================================================================
+CONFIGURAÇÃO COMPLETA POSTMAN - TAREFA 9
+DELETAR REVIEW DE LIVRO
+================================================================================
+
+IMPORTANTE: Você precisa ter uma review adicionada primeiro!
+
+================================================================================
+REQUISIÇÃO 1: REGISTRAR USUÁRIO
+================================================================================
+
+Método: POST
+
+URL: 
+http://localhost:5000/register
+
+Headers:
+┌─────────────────┬──────────────────────┐
+│ Key             │ Value                │
+├─────────────────┼──────────────────────┤
+│ Content-Type    │ application/json     │
+└─────────────────┴──────────────────────┘
+
+Body:
+- Selecione: raw
+- Tipo: JSON
+
+{
+  "username": "deletetest",
+  "password": "pass123"
+}
+
+Clique em: Send
+
+
+================================================================================
+REQUISIÇÃO 2: FAZER LOGIN
+================================================================================
+
+Método: POST
+
+URL:
+http://localhost:5000/customer/login
+
+Headers:
+┌─────────────────┬──────────────────────┐
+│ Key             │ Value                │
+├─────────────────┼──────────────────────┤
+│ Content-Type    │ application/json     │
+└─────────────────┴──────────────────────┘
+
+Body:
+- Selecione: raw
+- Tipo: JSON
+
+{
+  "username": "deletetest",
+  "password": "pass123"
+}
+
+Clique em: Send
+
+
+================================================================================
+REQUISIÇÃO 3: ADICIONAR UMA REVIEW
+================================================================================
+
+Método: PUT
+
+URL:
+http://localhost:5000/customer/auth/review/5?review=Great book!
+
+Headers:
+┌─────────────────┬──────────────────────┐
+│ Key             │ Value                │
+├─────────────────┼──────────────────────┤
+│ Content-Type    │ application/json     │
+└─────────────────┴──────────────────────┘
+
+Body:
+- Selecione: none
+
+Clique em: Send
+
+Resposta esperada:
+{
+  "message": "Review successfully added/updated"
+}
+
+
+================================================================================
+REQUISIÇÃO 4: VERIFICAR A REVIEW
+================================================================================
+
+Método: GET
+
+URL:
+http://localhost:5000/review/5
+
+Resposta esperada:
+{
+    "deletetest": "Great book!"
+}
+
+
+================================================================================
+REQUISIÇÃO 5: DELETAR A REVIEW (ESTA É A TAREFA 9!)
+================================================================================
+
+Método: DELETE
+
+URL:
+http://localhost:5000/customer/auth/review/5
+
+Headers:
+┌─────────────────┬──────────────────────┐
+│ Key             │ Value                │
+├─────────────────┼──────────────────────┤
+│ Content-Type    │ application/json     │
+└─────────────────┴──────────────────────┘
+
+Body:
+- Selecione: none (não precisa de body)
+
+Cookies:
+- O Postman usará automaticamente o cookie da requisição 2
+- NÃO precisa configurar nada manualmente!
+
+Clique em: Send
+
+Resposta esperada:
+Status: 200 OK
+{
+  "message": "Review successfully deleted"
+}
+
+TIRE O SCREENSHOT DESTA TELA E SALVE COMO: 9-deletereview.png
+
+
+================================================================================
+REQUISIÇÃO 6: VERIFICAR QUE A REVIEW FOI DELETADA
+================================================================================
+
+Método: GET
+
+URL:
+http://localhost:5000/review/5
+
+Resposta esperada:
+{}
+
+(Objeto vazio - a review foi deletada!)
+
+
+================================================================================
+TESTANDO SEGURANÇA: USUÁRIO NÃO PODE DELETAR REVIEW DE OUTRO
+================================================================================
+
+1. Adicione uma review com o usuário atual
+2. Registre e faça login com outro usuário
+3. Tente deletar a review do primeiro usuário
+
+Resposta esperada:
+Status: 404 Not Found
+{
+  "message": "Review not found for this user"
+}
+
+Isso prova que cada usuário só pode deletar suas próprias reviews!
+
+
+================================================================================
+POSSÍVEIS ERROS
+================================================================================
+
+ERRO 401 "User not authenticated":
+→ Você não está logado
+→ Solução: Faça login novamente (REQUISIÇÃO 2)
+
+ERRO 404 "Book not found":
+→ O ISBN não existe
+→ Solução: Use um ISBN válido (1 a 10)
+
+ERRO 404 "Review not found for this user":
+→ Você não tem uma review para este livro
+→ OU está tentando deletar a review de outro usuário
+→ Solução: Adicione uma review primeiro (REQUISIÇÃO 3)
+
+
+================================================================================
+RESUMO RÁPIDO
+================================================================================
+
+1. POST http://localhost:5000/register
+   Body: {"username":"deletetest","password":"pass123"}
+
+2. POST http://localhost:5000/customer/login
+   Body: {"username":"deletetest","password":"pass123"}
+
+3. PUT http://localhost:5000/customer/auth/review/5?review=Great book!
+   (Adicionar review primeiro)
+
+4. DELETE http://localhost:5000/customer/auth/review/5
+   (Tire screenshot desta!)
+
+5. GET http://localhost:5000/review/5
+   (Verificar que foi deletada)
+
+================================================================================

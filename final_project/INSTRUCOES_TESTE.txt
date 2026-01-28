@@ -1,0 +1,88 @@
+========================================
+INSTRUÇÕES PARA TESTAR NO POSTMAN
+========================================
+
+IMPORTANTE: Você precisa PRIMEIRO registrar um usuário antes de fazer login!
+
+PASSO 1: REGISTRAR UM USUÁRIO
+------------------------------
+Método: POST
+URL: http://localhost:5000/register
+Headers: Content-Type: application/json
+Body (raw JSON):
+{
+  "username": "testuser",
+  "password": "password123"
+}
+
+Resposta esperada (Status 201):
+{"message":"User successfully registered. Now you can login"}
+
+
+PASSO 2: FAZER LOGIN
+---------------------
+Método: POST
+URL: http://localhost:5000/customer/login
+Headers: Content-Type: application/json
+Body (raw JSON):
+{
+  "username": "testuser",
+  "password": "password123"
+}
+
+Resposta esperada (Status 200):
+{"message":"User successfully logged in"}
+
+
+OBSERVAÇÕES:
+- Use o MESMO username e password que você registrou no Passo 1
+- Se você reiniciar o servidor, precisará registrar o usuário novamente
+- O cookie de sessão será salvo automaticamente pelo Postman
+- Este cookie será usado nas próximas requisições autenticadas
+
+========================================
+
+
+PASSO 3: ADICIONAR/MODIFICAR REVIEW (REQUER LOGIN)
+---------------------------------------------------
+Método: PUT
+URL: http://localhost:5000/customer/auth/review/1?review=This is a great book!
+Headers: 
+  - Content-Type: application/json
+  - (O cookie de sessão será enviado automaticamente pelo Postman)
+
+Resposta esperada (Status 200):
+{"message":"Review successfully added/updated"}
+
+IMPORTANTE:
+- Você DEVE estar logado (ter feito o Passo 2 primeiro)
+- O Postman salva o cookie automaticamente após o login
+- A review vai no parâmetro de query (?review=texto)
+- Se você adicionar outra review com o mesmo usuário, ela será MODIFICADA
+- Se outro usuário adicionar review no mesmo livro, será ADICIONADA como nova
+
+
+PASSO 4: VERIFICAR REVIEWS ADICIONADAS
+---------------------------------------
+Método: GET
+URL: http://localhost:5000/review/1
+
+Resposta esperada:
+{
+    "reviewer1": "This is a great book!",
+    "reviewer2": "Excellent read!"
+}
+
+========================================
+TESTANDO MÚLTIPLOS USUÁRIOS
+========================================
+
+Para testar múltiplos usuários adicionando reviews:
+
+1. Registre e faça login com usuário 1
+2. Adicione uma review
+3. Registre e faça login com usuário 2 (em nova aba ou limpe cookies)
+4. Adicione outra review no mesmo livro
+5. Verifique que ambas as reviews aparecem
+
+========================================

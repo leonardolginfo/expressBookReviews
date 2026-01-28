@@ -1,0 +1,2 @@
+curl -X DELETE "http://localhost:5000/customer/auth/review/5" -H "Cookie: connect.sid=s%3Aqz6wq7Uns8oYoYHIRhCDs2cZHyqK2j2c.zPxfxq50kEYDFxpirn9qGDGEUyvzEk55JkZEudfquTw"
+{"message":"Review successfully deleted"}
