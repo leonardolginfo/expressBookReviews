@@ -1,0 +1,101 @@
+================================================================================
+TAREFA 12 - OBTER DETALHES DO LIVRO POR AUTOR COM ASYNC-AWAIT
+================================================================================
+
+IMPLEMENTAÇÃO:
+--------------
+
+Adicionei uma nova rota em general.js que usa async-await com Promises:
+
+Rota: GET /async/author/:author
+
+Código:
+```javascript
+public_users.get('/async/author/:author', async function (req, res) {
+  try {
+    const author = req.params.author;
+    
+    // Simulate an async operation using Promise
+    const getBooksByAuthor = new Promise((resolve, reject) => {
+      const bookKeys = Object.keys(books);
+      const booksByAuthor = [];
+      
+      bookKeys.forEach(key => {
+        if (books[key].author === author) {
+          booksByAuthor.push(books[key]);
+        }
+      });
+      
+      if (booksByAuthor.length > 0) {
+        resolve(booksByAuthor);
+      } else {
+        reject(new Error("No books found by this author"));
+      }
+    });
+    
+    const bookList = await getBooksByAuthor;
+    res.send(JSON.stringify(bookList, null, 4));
+  } catch (error) {
+    res.status(404).json({message: error.message});
+  }
+});
+```
+
+EXPLICAÇÃO:
+-----------
+
+1. A função é declarada como 'async' para permitir o uso de 'await'
+
+2. Obtém o nome do autor dos parâmetros da URL: req.params.author
+
+3. Cria uma Promise que:
+   - Itera por todos os livros
+   - Filtra os livros pelo autor especificado
+   - Resolve com o array de livros se encontrar algum
+   - Rejeita com erro se não encontrar nenhum livro
+
+4. Usa 'await' para esperar a Promise ser resolvida
+
+5. Tratamento de erros com try-catch:
+   - Se a Promise for rejeitada, captura o erro
+   - Retorna status 404 com mensagem de erro
+
+6. Retorna o array de livros formatado em JSON
+
+DIFERENÇA DA TAREFA 3:
+----------------------
+
+Tarefa 3 (Síncrona):
+- Itera e filtra diretamente
+- Retorna imediatamente
+
+Tarefa 12 (Assíncrona):
+- Usa Promise + async-await
+- Permite operações assíncronas (ex: consulta em banco de dados)
+- Melhor para operações que levam tempo
+
+TESTANDO:
+---------
+
+URL: http://localhost:5000/async/author/Chinua%20Achebe
+Método: GET
+
+Exemplos:
+- /async/author/Chinua%20Achebe → Retorna 1 livro
+- /async/author/Unknown → Retorna 4 livros
+- /async/author/Jane%20Austen → Retorna 1 livro
+- /async/author/NonExistent → Retorna erro 404
+
+POSTMAN:
+--------
+Método: GET
+URL: http://localhost:5000/async/author/Chinua Achebe
+Headers: (não precisa)
+Body: (não precisa)
+
+Nota: No Postman, você pode digitar o nome com espaços normalmente.
+O Postman codifica automaticamente para %20.
+
+Tire screenshot e salve como: task12.png
+
+================================================================================

@@ -1,0 +1,170 @@
+================================================================================
+SOLUÇÃO PARA ERRO 401 NO LOGIN
+================================================================================
+
+PROBLEMA:
+---------
+Ao tentar fazer login, você recebe:
+Status: 401
+{"message": "Invalid username or password"}
+
+CAUSA:
+------
+O array de usuários está vazio. Você precisa REGISTRAR o usuário ANTES de 
+fazer login.
+
+SOLUÇÃO PASSO A PASSO NO POSTMAN:
+================================================================================
+
+PASSO 1: REGISTRAR O USUÁRIO (OBRIGATÓRIO!)
+--------------------------------------------
+
+Abra uma nova requisição no Postman:
+
+Método: POST
+
+URL:
+http://localhost:5000/register
+
+Headers:
+┌─────────────────┬──────────────────────┐
+│ Key             │ Value                │
+├─────────────────┼──────────────────────┤
+│ Content-Type    │ application/json     │
+└─────────────────┴──────────────────────┘
+
+Body:
+- Clique em "Body"
+- Selecione "raw"
+- Selecione "JSON" no dropdown
+
+Cole exatamente este JSON:
+{
+  "username": "testuser",
+  "password": "password123"
+}
+
+Clique em SEND
+
+Resposta esperada:
+Status: 201 Created
+{
+  "message": "User successfully registered. Now you can login"
+}
+
+⚠️ SE RECEBER 409 "Username already exists":
+   - O usuário já foi registrado anteriormente
+   - Pode prosseguir para o Passo 2
+   - OU use outro username
+
+
+PASSO 2: FAZER LOGIN
+---------------------
+
+Agora sim, faça o login:
+
+Método: POST
+
+URL:
+http://localhost:5000/customer/login
+
+Headers:
+┌─────────────────┬──────────────────────┐
+│ Key             │ Value                │
+├─────────────────┼──────────────────────┤
+│ Content-Type    │ application/json     │
+└─────────────────┴──────────────────────┘
+
+Body:
+- Clique em "Body"
+- Selecione "raw"
+- Selecione "JSON" no dropdown
+
+Cole EXATAMENTE o mesmo username e password do Passo 1:
+{
+  "username": "testuser",
+  "password": "password123"
+}
+
+Clique em SEND
+
+Resposta esperada:
+Status: 200 OK
+{
+  "message": "User successfully logged in"
+}
+
+
+CHECKLIST DE VERIFICAÇÃO:
+================================================================================
+
+□ Fiz o registro ANTES do login?
+□ Usei o MESMO username nos dois passos?
+□ Usei a MESMA password nos dois passos?
+□ O servidor está rodando? (npm start)
+□ Estou usando a porta correta? (5000)
+□ O Content-Type está como application/json?
+□ O Body está em formato JSON válido?
+□ Não tem espaços extras no username ou password?
+
+
+ERROS COMUNS:
+================================================================================
+
+❌ ERRO: 401 "Invalid username or password"
+   CAUSA: Username ou password incorretos, ou usuário não registrado
+   SOLUÇÃO: Registre o usuário primeiro (Passo 1)
+
+❌ ERRO: 400 "Username and password are required"
+   CAUSA: JSON mal formatado ou campos vazios
+   SOLUÇÃO: Verifique o JSON no Body
+
+❌ ERRO: 409 "Username already exists"
+   CAUSA: Usuário já foi registrado
+   SOLUÇÃO: Use esse mesmo usuário para login OU registre com outro username
+
+❌ ERRO: Cannot connect to server
+   CAUSA: Servidor não está rodando
+   SOLUÇÃO: Execute "npm start" no terminal
+
+
+EXEMPLO COMPLETO DE TESTE:
+================================================================================
+
+1. Abra o Postman
+
+2. REGISTRO:
+   POST http://localhost:5000/register
+   Body: {"username":"maria","password":"senha123"}
+   → Deve retornar 201
+
+3. LOGIN:
+   POST http://localhost:5000/customer/login
+   Body: {"username":"maria","password":"senha123"}
+   → Deve retornar 200
+
+4. Agora você pode usar as rotas autenticadas!
+
+
+IMPORTANTE:
+================================================================================
+
+⚠️ Se você REINICIAR o servidor (npm start), o array de usuários é LIMPO!
+   Você precisará REGISTRAR o usuário novamente.
+
+⚠️ O username e password são CASE SENSITIVE (maiúsculas/minúsculas importam)
+   "TestUser" é diferente de "testuser"
+
+⚠️ Use EXATAMENTE o mesmo username e password no registro e no login
+
+
+TESTANDO SE O SERVIDOR ESTÁ FUNCIONANDO:
+================================================================================
+
+Teste rápido - abra o navegador ou Postman:
+GET http://localhost:5000/
+
+Deve retornar a lista de livros em JSON.
+Se não funcionar, o servidor não está rodando.
+
+================================================================================

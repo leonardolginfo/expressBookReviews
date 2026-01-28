@@ -1,0 +1,73 @@
+================================================================================
+TAREFA 10 - OBTER LISTA DE LIVROS COM ASYNC-AWAIT
+================================================================================
+
+IMPLEMENTAÇÃO:
+--------------
+
+Adicionei uma nova rota em general.js que usa async-await com Promises:
+
+Rota: GET /async
+
+Código:
+```javascript
+public_users.get('/async', async function (req, res) {
+  try {
+    // Simulate an async operation using Promise
+    const getBooks = new Promise((resolve, reject) => {
+      resolve(books);
+    });
+    
+    const bookList = await getBooks;
+    res.send(JSON.stringify(bookList, null, 4));
+  } catch (error) {
+    res.status(500).json({message: "Error fetching books", error: error.message});
+  }
+});
+```
+
+EXPLICAÇÃO:
+-----------
+
+1. A função é declarada como 'async' para permitir o uso de 'await'
+
+2. Criamos uma Promise que resolve com a lista de livros:
+   - new Promise((resolve, reject) => { resolve(books); })
+
+3. Usamos 'await' para esperar a Promise ser resolvida:
+   - const bookList = await getBooks;
+
+4. Tratamento de erros com try-catch:
+   - Se houver erro, retorna status 500 com mensagem
+
+5. Retorna a lista de livros formatada em JSON
+
+DIFERENÇA DA TAREFA 1:
+----------------------
+
+Tarefa 1 (Síncrona):
+- Retorna diretamente: res.send(JSON.stringify(books, null, 4));
+
+Tarefa 10 (Assíncrona):
+- Usa Promise + async-await
+- Permite operações assíncronas (ex: buscar de banco de dados)
+- Melhor para operações que levam tempo
+
+TESTANDO:
+---------
+
+URL: http://localhost:5000/async
+Método: GET
+
+Resposta: Lista completa de livros em JSON
+
+POSTMAN:
+--------
+Método: GET
+URL: http://localhost:5000/async
+Headers: (não precisa)
+Body: (não precisa)
+
+Tire screenshot e salve como: task10.png
+
+================================================================================

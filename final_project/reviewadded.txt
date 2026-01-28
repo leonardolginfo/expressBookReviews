@@ -1,0 +1,2 @@
+curl -X PUT "http://localhost:5000/customer/auth/review/1?review=This%20is%20a%20great%20book!" -H "Cookie: connect.sid=s%3Aqz6wq7Uns8oYoYHIRhCDs2cZHyqK2j2c.zPxfxq50kEYDFxpirn9qGDGEUyvzEk55JkZEudfquTw"
+{"message":"Review successfully added/updated"}

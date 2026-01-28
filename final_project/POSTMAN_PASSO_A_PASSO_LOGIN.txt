@@ -1,0 +1,176 @@
+================================================================================
+POSTMAN - PASSO A PASSO PARA LOGIN (COM IMAGENS DESCRITIVAS)
+================================================================================
+
+🔴 IMPORTANTE: FAÇA OS 2 PASSOS NA ORDEM!
+
+================================================================================
+PASSO 1: REGISTRAR USUÁRIO
+================================================================================
+
+1. Abra o Postman
+
+2. Clique em "New" → "HTTP Request" (ou use Ctrl+N)
+
+3. Configure a requisição:
+
+   ┌─────────────────────────────────────────────────────────────┐
+   │ [POST ▼] http://localhost:5000/register          [Send]     │
+   └─────────────────────────────────────────────────────────────┘
+
+4. Clique na aba "Headers" (abaixo da URL)
+   
+   Adicione:
+   Key: Content-Type
+   Value: application/json
+   
+   ✓ Marque o checkbox ao lado
+
+5. Clique na aba "Body" (ao lado de Headers)
+
+6. Selecione "raw" (radio button)
+
+7. No dropdown ao lado direito, selecione "JSON"
+
+8. Cole este JSON na área de texto:
+
+   {
+     "username": "quicktest",
+     "password": "test123"
+   }
+
+9. Clique no botão azul "Send"
+
+10. Verifique a resposta abaixo:
+
+    ✅ SUCESSO:
+    Status: 201 Created
+    {
+      "message": "User successfully registered. Now you can login"
+    }
+
+    ⚠️ JÁ EXISTE:
+    Status: 409 Conflict
+    {
+      "message": "Username already exists"
+    }
+    → Tudo bem! Pode continuar para o Passo 2
+
+
+================================================================================
+PASSO 2: FAZER LOGIN
+================================================================================
+
+1. Abra uma NOVA requisição no Postman (ou limpe a anterior)
+
+2. Configure a requisição:
+
+   ┌─────────────────────────────────────────────────────────────┐
+   │ [POST ▼] http://localhost:5000/customer/login    [Send]     │
+   └─────────────────────────────────────────────────────────────┘
+
+3. Clique na aba "Headers"
+   
+   Adicione:
+   Key: Content-Type
+   Value: application/json
+   
+   ✓ Marque o checkbox
+
+4. Clique na aba "Body"
+
+5. Selecione "raw"
+
+6. Selecione "JSON" no dropdown
+
+7. Cole EXATAMENTE o mesmo JSON do Passo 1:
+
+   {
+     "username": "quicktest",
+     "password": "test123"
+   }
+
+8. Clique em "Send"
+
+9. Verifique a resposta:
+
+    ✅ SUCESSO:
+    Status: 200 OK
+    {
+      "message": "User successfully logged in"
+    }
+
+    ❌ ERRO 401:
+    Status: 401 Unauthorized
+    {
+      "message": "Invalid username or password"
+    }
+    → Volte ao Passo 1 e registre o usuário primeiro!
+
+
+================================================================================
+VERIFICAÇÃO VISUAL NO POSTMAN
+================================================================================
+
+Após o login bem-sucedido, você verá:
+
+1. Na parte superior:
+   Status: 200 OK
+   Time: ~XX ms
+   Size: ~XX B
+
+2. Na aba "Cookies" (abaixo da resposta):
+   Você verá um cookie chamado "connect.sid"
+   → Este cookie será usado automaticamente nas próximas requisições!
+
+3. Na aba "Body":
+   {
+     "message": "User successfully logged in"
+   }
+
+
+================================================================================
+TESTANDO AS ROTAS AUTENTICADAS
+================================================================================
+
+Agora que você está logado, pode testar as rotas autenticadas:
+
+ADICIONAR REVIEW:
+-----------------
+Método: PUT
+URL: http://localhost:5000/customer/auth/review/1?review=Great book!
+Body: none
+→ O cookie será enviado automaticamente!
+
+
+DELETAR REVIEW:
+---------------
+Método: DELETE
+URL: http://localhost:5000/customer/auth/review/1
+Body: none
+→ O cookie será enviado automaticamente!
+
+
+================================================================================
+DICAS IMPORTANTES
+================================================================================
+
+✓ Use SEMPRE o mesmo username e password no registro e login
+✓ O Postman salva o cookie automaticamente após o login
+✓ Não precisa configurar o cookie manualmente
+✓ Se reiniciar o servidor, registre o usuário novamente
+✓ Username e password são case-sensitive (maiúsculas importam)
+
+
+================================================================================
+CREDENCIAIS DE TESTE PRONTAS
+================================================================================
+
+O servidor já tem este usuário registrado:
+
+Username: quicktest
+Password: test123
+
+Use estas credenciais no Postman!
+
+================================================================================

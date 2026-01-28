@@ -1,0 +1,203 @@
+================================================================================
+RESUMO COMPLETO - PROJETO FINAL: APLICATIVO DE AVALIAÇÃO DE LIVROS
+================================================================================
+
+TAREFAS SÍNCRONAS (1-9)
+================================================================================
+
+✅ TAREFA 1: Obter lista de todos os livros
+   Rota: GET /
+   Arquivo: getallbooks
+
+✅ TAREFA 2: Obter livro por ISBN
+   Rota: GET /isbn/:isbn
+   Arquivo: getbooksbyISBN
+
+✅ TAREFA 3: Obter livros por autor
+   Rota: GET /author/:author
+   Arquivo: getbooksbyauthor
+
+✅ TAREFA 4: Obter livros por título
+   Rota: GET /title/:title
+   Arquivo: getbooksbytitle
+
+✅ TAREFA 5: Obter reviews de um livro
+   Rota: GET /review/:isbn
+   Arquivo: getbookreview
+
+✅ TAREFA 6: Registrar novo usuário
+   Rota: POST /register
+   Arquivo: register
+
+✅ TAREFA 7: Login de usuário
+   Rota: POST /customer/login
+   Arquivo: login
+
+✅ TAREFA 8: Adicionar/Modificar review (autenticado)
+   Rota: PUT /customer/auth/review/:isbn?review=texto
+   Arquivo: reviewadded
+
+✅ TAREFA 9: Deletar review (autenticado)
+   Rota: DELETE /customer/auth/review/:isbn
+   Arquivo: deletereview
+
+
+TAREFAS ASSÍNCRONAS COM PROMISES/ASYNC-AWAIT (10-13)
+================================================================================
+
+✅ TAREFA 10: Obter lista de todos os livros (async)
+   Rota: GET /async
+   Screenshot: task10.png
+
+✅ TAREFA 11: Obter livro por ISBN (async)
+   Rota: GET /async/isbn/:isbn
+   Screenshot: task11.png
+
+✅ TAREFA 12: Obter livros por autor (async)
+   Rota: GET /async/author/:author
+   Screenshot: task12.png
+
+✅ TAREFA 13: Obter livros por título (async)
+   Rota: GET /async/title/:title
+   Screenshot: task13.png
+
+
+ARQUIVOS MODIFICADOS
+================================================================================
+
+1. index.js
+   - Implementado mecanismo de autenticação JWT
+   - Middleware de verificação de token
+
+2. router/general.js
+   - Todas as rotas públicas (Tarefas 1-5)
+   - Registro de usuário (Tarefa 6)
+   - Rotas assíncronas (Tarefas 10-13)
+
+3. router/auth_users.js
+   - Login de usuário (Tarefa 7)
+   - Adicionar/Modificar review (Tarefa 8)
+   - Deletar review (Tarefa 9)
+   - Funções isValid() e authenticatedUser()
+
+4. router/booksdb.js
+   - Banco de dados de livros (não modificado)
+
+
+DEPENDÊNCIAS INSTALADAS
+================================================================================
+
+- express: Framework web
+- express-session: Gerenciamento de sessões
+- jsonwebtoken: Autenticação JWT
+- nodemon: Auto-reload do servidor
+- axios: Cliente HTTP (preparado para uso)
+
+
+ROTAS DISPONÍVEIS
+================================================================================
+
+PÚBLICAS (Não requerem autenticação):
+--------------------------------------
+GET    /                              - Lista todos os livros
+GET    /isbn/:isbn                    - Detalhes do livro por ISBN
+GET    /author/:author                - Livros por autor
+GET    /title/:title                  - Livros por título
+GET    /review/:isbn                  - Reviews de um livro
+POST   /register                      - Registrar novo usuário
+
+GET    /async                         - Lista todos os livros (async)
+GET    /async/isbn/:isbn              - Detalhes por ISBN (async)
+GET    /async/author/:author          - Livros por autor (async)
+GET    /async/title/:title            - Livros por título (async)
+
+AUTENTICADAS (Requerem login):
+-------------------------------
+POST   /customer/login                - Login de usuário
+PUT    /customer/auth/review/:isbn    - Adicionar/Modificar review
+DELETE /customer/auth/review/:isbn    - Deletar review
+
+
+COMO TESTAR NO POSTMAN
+================================================================================
+
+1. Rotas Públicas:
+   - Apenas configure método e URL
+   - Não precisa de autenticação
+
+2. Rotas Autenticadas:
+   a) Primeiro: POST /register (registrar usuário)
+   b) Depois: POST /customer/login (fazer login)
+   c) O Postman salva o cookie automaticamente
+   d) Use as rotas /customer/auth/* normalmente
+
+
+ARQUIVOS DE AVALIAÇÃO CRIADOS
+================================================================================
+
+Para Opção 1 (IA):
+- getallbooks
+- getbooksbyISBN
+- getbooksbyauthor
+- getbooksbytitle
+- getbookreview
+- register
+- login
+- reviewadded
+- deletereview
+
+Para Opção 2 (Pares):
+- 1-getallbooks.png
+- 2-getbooksbyISBN.png
+- 3-getbooksbyauthor.png
+- 4-getbooksbytitle.png
+- 5-getbookreview.png
+- 6-register.png
+- 7-login.png
+- 8-reviewadded.png
+- 9-deletereview.png
+- task10.png
+- task11.png
+- task12.png
+- task13.png
+
+
+ARQUIVOS DE DOCUMENTAÇÃO CRIADOS
+================================================================================
+
+- INSTRUCOES_TESTE.txt
+- POSTMAN_TAREFA_8_COMPLETO.txt
+- POSTMAN_TAREFA_9_COMPLETO.txt
+- TASK10_EXPLANATION.txt
+- TASK11_EXPLANATION.txt
+- TASK12_EXPLANATION.txt
+- TASK13_EXPLANATION.txt
+- RESUMO_COMPLETO_TAREFAS.txt (este arquivo)
+
+
+SERVIDOR
+================================================================================
+
+Porta: 5000
+Comando para iniciar: npm start
+URL base: http://localhost:5000
+
+
+PRÓXIMOS PASSOS
+================================================================================
+
+Para Opção 1 - Submissão avaliada por IA:
+1. Fazer commit de todas as alterações
+2. Push para o repositório GitHub
+3. Copiar URL pública do general.js
+4. Submeter os arquivos de texto criados
+
+Para Opção 2 - Submissão avaliada por pares:
+1. Testar cada rota no Postman
+2. Tirar screenshots conforme especificado
+3. Salvar com os nomes corretos
+4. Submeter as imagens
+
+================================================================================
+PROJETO CONCLUÍDO COM SUCESSO!
+================================================================================

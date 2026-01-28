@@ -1,0 +1,223 @@
+================================================================================
+CONFIGURAÇÃO COMPLETA POSTMAN - TAREFA 8
+ADICIONAR/MODIFICAR REVIEW DE LIVRO
+================================================================================
+
+IMPORTANTE: Você precisa fazer 3 requisições em sequência!
+
+================================================================================
+REQUISIÇÃO 1: REGISTRAR USUÁRIO
+================================================================================
+
+Método: POST
+
+URL: 
+http://localhost:5000/register
+
+Headers:
+┌─────────────────┬──────────────────────┐
+│ Key             │ Value                │
+├─────────────────┼──────────────────────┤
+│ Content-Type    │ application/json     │
+└─────────────────┴──────────────────────┘
+
+Body:
+- Selecione: raw
+- Tipo: JSON
+
+Cole este JSON:
+{
+  "username": "reviewer1",
+  "password": "pass123"
+}
+
+Clique em: Send
+
+Resposta esperada:
+Status: 201 Created
+{
+  "message": "User successfully registered. Now you can login"
+}
+
+
+================================================================================
+REQUISIÇÃO 2: FAZER LOGIN
+================================================================================
+
+Método: POST
+
+URL:
+http://localhost:5000/customer/login
+
+Headers:
+┌─────────────────┬──────────────────────┐
+│ Key             │ Value                │
+├─────────────────┼──────────────────────┤
+│ Content-Type    │ application/json     │
+└─────────────────┴──────────────────────┘
+
+Body:
+- Selecione: raw
+- Tipo: JSON
+
+Cole este JSON:
+{
+  "username": "reviewer1",
+  "password": "pass123"
+}
+
+Clique em: Send
+
+Resposta esperada:
+Status: 200 OK
+{
+  "message": "User successfully logged in"
+}
+
+IMPORTANTE: O Postman salvará automaticamente o cookie de sessão!
+Você verá na aba "Cookies" abaixo da resposta um cookie chamado "connect.sid"
+
+
+================================================================================
+REQUISIÇÃO 3: ADICIONAR REVIEW (ESTA É A TAREFA 8!)
+================================================================================
+
+Método: PUT
+
+URL:
+http://localhost:5000/customer/auth/review/1?review=This is a great book!
+
+OU se preferir com espaços codificados:
+http://localhost:5000/customer/auth/review/1?review=This%20is%20a%20great%20book!
+
+Headers:
+┌─────────────────┬──────────────────────┐
+│ Key             │ Value                │
+├─────────────────┼──────────────────────┤
+│ Content-Type    │ application/json     │
+└─────────────────┴──────────────────────┘
+
+Params (Query Params):
+┌─────────────────┬──────────────────────────────┐
+│ Key             │ Value                        │
+├─────────────────┼──────────────────────────────┤
+│ review          │ This is a great book!        │
+└─────────────────┴──────────────────────────────┘
+
+Body:
+- Selecione: none (não precisa de body)
+
+Cookies:
+- O Postman usará automaticamente o cookie da requisição 2
+- NÃO precisa configurar nada manualmente!
+
+Clique em: Send
+
+Resposta esperada:
+Status: 200 OK
+{
+  "message": "Review successfully added/updated"
+}
+
+TIRE O SCREENSHOT DESTA TELA E SALVE COMO: 8-reviewadded.png
+
+
+================================================================================
+REQUISIÇÃO 4 (OPCIONAL): VERIFICAR A REVIEW ADICIONADA
+================================================================================
+
+Método: GET
+
+URL:
+http://localhost:5000/review/1
+
+Headers:
+- Não precisa configurar nada
+
+Body:
+- Selecione: none
+
+Clique em: Send
+
+Resposta esperada:
+Status: 200 OK
+{
+    "reviewer1": "This is a great book!"
+}
+
+
+================================================================================
+TESTANDO MODIFICAÇÃO DE REVIEW (MESMO USUÁRIO)
+================================================================================
+
+Repita a REQUISIÇÃO 3, mas mude o texto da review:
+
+URL:
+http://localhost:5000/customer/auth/review/1?review=Updated review - Amazing book!
+
+A review anterior será SUBSTITUÍDA pela nova.
+
+
+================================================================================
+TESTANDO MÚLTIPLOS USUÁRIOS (OPCIONAL)
+================================================================================
+
+Para adicionar review de outro usuário no mesmo livro:
+
+1. Abra uma nova aba no Postman
+2. Registre um novo usuário (REQUISIÇÃO 1) com username diferente:
+   {
+     "username": "reviewer2",
+     "password": "pass456"
+   }
+
+3. Faça login com esse usuário (REQUISIÇÃO 2)
+
+4. Adicione uma review (REQUISIÇÃO 3):
+   http://localhost:5000/customer/auth/review/1?review=Excellent read!
+
+5. Verifique que agora há 2 reviews:
+   {
+       "reviewer1": "This is a great book!",
+       "reviewer2": "Excellent read!"
+   }
+
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+ERRO 401 "User not authenticated":
+→ Você não fez login ou o cookie expirou
+→ Solução: Faça a REQUISIÇÃO 2 novamente
+
+ERRO 400 "Review is required":
+→ Você esqueceu de adicionar o parâmetro ?review=texto na URL
+→ Solução: Adicione o query parameter "review"
+
+ERRO 404 "Book not found":
+→ O ISBN não existe (use números de 1 a 10)
+→ Solução: Use um ISBN válido
+
+ERRO 403 "User not logged in":
+→ O cookie de sessão não está sendo enviado
+→ Solução: Certifique-se de fazer login primeiro na mesma aba/workspace
+
+
+================================================================================
+RESUMO RÁPIDO
+================================================================================
+
+1. POST http://localhost:5000/register
+   Body: {"username":"reviewer1","password":"pass123"}
+
+2. POST http://localhost:5000/customer/login
+   Body: {"username":"reviewer1","password":"pass123"}
+
+3. PUT http://localhost:5000/customer/auth/review/1?review=This is a great book!
+   (Tire screenshot desta!)
+
+4. GET http://localhost:5000/review/1
+   (Para verificar)
+
+================================================================================

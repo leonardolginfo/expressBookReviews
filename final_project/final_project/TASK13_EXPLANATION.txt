@@ -1,0 +1,118 @@
+================================================================================
+TAREFA 13 - OBTER DETALHES DO LIVRO POR TÍTULO COM ASYNC-AWAIT
+================================================================================
+
+IMPLEMENTAÇÃO:
+--------------
+
+Adicionei uma nova rota em general.js que usa async-await com Promises:
+
+Rota: GET /async/title/:title
+
+Código:
+```javascript
+public_users.get('/async/title/:title', async function (req, res) {
+  try {
+    const title = req.params.title;
+    
+    // Simulate an async operation using Promise
+    const getBooksByTitle = new Promise((resolve, reject) => {
+      const bookKeys = Object.keys(books);
+      const booksByTitle = [];
+      
+      bookKeys.forEach(key => {
+        if (books[key].title === title) {
+          booksByTitle.push(books[key]);
+        }
+      });
+      
+      if (booksByTitle.length > 0) {
+        resolve(booksByTitle);
+      } else {
+        reject(new Error("No books found with this title"));
+      }
+    });
+    
+    const bookList = await getBooksByTitle;
+    res.send(JSON.stringify(bookList, null, 4));
+  } catch (error) {
+    res.status(404).json({message: error.message});
+  }
+});
+```
+
+EXPLICAÇÃO:
+-----------
+
+1. A função é declarada como 'async' para permitir o uso de 'await'
+
+2. Obtém o título do livro dos parâmetros da URL: req.params.title
+
+3. Cria uma Promise que:
+   - Itera por todos os livros
+   - Filtra os livros pelo título especificado
+   - Resolve com o array de livros se encontrar algum
+   - Rejeita com erro se não encontrar nenhum livro
+
+4. Usa 'await' para esperar a Promise ser resolvida
+
+5. Tratamento de erros com try-catch:
+   - Se a Promise for rejeitada, captura o erro
+   - Retorna status 404 com mensagem de erro
+
+6. Retorna o array de livros formatado em JSON
+
+DIFERENÇA DA TAREFA 4:
+----------------------
+
+Tarefa 4 (Síncrona):
+- Itera e filtra diretamente
+- Retorna imediatamente
+
+Tarefa 13 (Assíncrona):
+- Usa Promise + async-await
+- Permite operações assíncronas (ex: consulta em banco de dados)
+- Melhor para operações que levam tempo
+
+TESTANDO:
+---------
+
+URL: http://localhost:5000/async/title/Things%20Fall%20Apart
+Método: GET
+
+Exemplos:
+- /async/title/Things%20Fall%20Apart → Retorna 1 livro
+- /async/title/Fairy%20tales → Retorna 1 livro
+- /async/title/Pride%20and%20Prejudice → Retorna 1 livro
+- /async/title/NonExistentBook → Retorna erro 404
+
+POSTMAN:
+--------
+Método: GET
+URL: http://localhost:5000/async/title/Things Fall Apart
+Headers: (não precisa)
+Body: (não precisa)
+
+Nota: No Postman, você pode digitar o título com espaços normalmente.
+O Postman codifica automaticamente para %20.
+
+Tire screenshot e salve como: task13.png
+
+================================================================================
+RESUMO DAS TAREFAS 10-13
+================================================================================
+
+Todas as 4 rotas assíncronas foram implementadas em general.js:
+
+✅ Task 10: GET /async - Obter todos os livros
+✅ Task 11: GET /async/isbn/:isbn - Obter livro por ISBN
+✅ Task 12: GET /async/author/:author - Obter livros por autor
+✅ Task 13: GET /async/title/:title - Obter livros por título
+
+Todas usam:
+- async/await
+- Promises
+- Tratamento de erros com try-catch
+- Retorno de dados formatados em JSON
+
+================================================================================

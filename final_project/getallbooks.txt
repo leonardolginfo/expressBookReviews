@@ -1,0 +1,94 @@
+ curl http://localhost:5000/
+
+Aviso de Segurança: Risco de Execução de Script
+Invoke-WebRequest analisa o conteúdo da página da Web. O código de script na página pode ser executado durante a análise.
+      AÇÃO RECOMENDADA:
+      Use o parâmetro -UseBasicParsing para evitar a execução do código de script.
+
+      Deseja continuar?
+
+[S] Sim  [A] Sim para Todos  [N] Não  [T] Não para Todos  [U] Suspender  [?] Ajuda (o padrão é "N"): s
+
+
+StatusCode        : 200
+StatusDescription : OK
+Content           : {
+                        "1": {
+                            "author": "Chinua Achebe",
+                            "title": "Things Fall Apart",
+                            "reviews": {}
+                        },
+                        "2": {
+                            "author": "Hans Christian Andersen",
+                            "title": "Fairy tales...
+RawContent        : HTTP/1.1 200 OK
+                    Connection: keep-alive
+                    Keep-Alive: timeout=5
+                    Content-Length: 1155
+                    Content-Type: text/html; charset=utf-8
+                    Date: Tue, 27 Jan 2026 19:19:38 GMT
+                    ETag: W/"483-6oTdTdKnqV79leayz1Ea8uKt...
+Forms             : {}
+Headers           : {[Connection, keep-alive], [Keep-Alive, timeout=5], [Content-Length, 1155], [Content-Type, text/html;
+                    charset=utf-8]...}
+Images            : {}
+InputFields       : {}
+Links             : {}
+ParsedHtml        : mshtml.HTMLDocumentClass
+RawContentLength  : 1155
+
+
+
+PS C:\Users\leogo\Downloads\ibm docs\EXPRESS\expressBookReviews-main\final_project> curl.exe http://localhost:5000/
+{
+    "1": {
+        "author": "Chinua Achebe",
+        "title": "Things Fall Apart",
+        "reviews": {}
+    },
+    "2": {
+        "author": "Hans Christian Andersen",
+        "title": "Fairy tales",
+        "reviews": {}
+    },
+    "3": {
+        "author": "Dante Alighieri",
+        "title": "The Divine Comedy",
+        "reviews": {}
+    },
+    "4": {
+        "author": "Unknown",
+        "title": "The Epic Of Gilgamesh",
+        "reviews": {}
+    },
+    "5": {
+        "author": "Unknown",
+        "title": "The Book Of Job",
+        "reviews": {}
+    },
+    "6": {
+        "author": "Unknown",
+        "title": "One Thousand and One Nights",
+        "reviews": {}
+    },
+    "7": {
+        "author": "Unknown",
+        "title": "Njál's Saga",
+        "reviews": {}
+    },
+    "8": {
+        "author": "Jane Austen",
+        "title": "Pride and Prejudice",
+        "reviews": {}
+    },
+    "9": {
+        "author": "Honoré de Balzac",
+        "title": "Le Père Goriot",
+        "reviews": {}
+    },
+    "10": {
+        "author": "Samuel Beckett",
+        "title": "Molloy, Malone Dies, The Unnamable, the trilogy",
+        "reviews": {}
+    }
+}
