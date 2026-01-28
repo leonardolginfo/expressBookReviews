@@ -100,4 +100,55 @@ public_users.get('/async', async function (req, res) {
   }
 });
 
+// Task 11: Get book details based on ISBN using async-await
+public_users.get('/async/isbn/:isbn', async function (req, res) {
+  try {
+    const isbn = req.params.isbn;
+    
+    // Simulate an async operation using Promise
+    const getBookByISBN = new Promise((resolve, reject) => {
+      if (books[isbn]) {
+        resolve(books[isbn]);
+      } else {
+        reject(new Error("Book not found"));
+      }
+    });
+    
+    const book = await getBookByISBN;
+    res.send(JSON.stringify(book, null, 4));
+  } catch (error) {
+    res.status(404).json({message: error.message});
+  }
+});
+
+// Task 12: Get book details based on Author using async-await
+public_users.get('/async/author/:author', async function (req, res) {
+  try {
+    const author = req.params.author;
+    
+    // Simulate an async operation using Promise
+    const getBooksByAuthor = new Promise((resolve, reject) => {
+      const bookKeys = Object.keys(books);
+      const booksByAuthor = [];
+      
+      bookKeys.forEach(key => {
+        if (books[key].author === author) {
+          booksByAuthor.push(books[key]);
+        }
+      });
+      
+      if (booksByAuthor.length > 0) {
+        resolve(booksByAuthor);
+      } else {
+        reject(new Error("No books found by this author"));
+      }
+    });
+    
+    const bookList = await getBooksByAuthor;
+    res.send(JSON.stringify(bookList, null, 4));
+  } catch (error) {
+    res.status(404).json({message: error.message});
+  }
+});
+
 module.exports.general = public_users;
