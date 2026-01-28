@@ -69,7 +69,7 @@ public_users.get('/title/:title',function (req, res) {
   });
   
   if (booksByTitle.length > 0) {
-    res.send(JSON.stringify(booksByTitle, null, 4));
+    res.send(JSON.stringify(booksByTitle, null, 4)); 
   } else {
     res.status(404).json({message: "No books found with this title"});
   }
