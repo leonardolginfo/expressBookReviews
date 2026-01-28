@@ -151,4 +151,34 @@ public_users.get('/async/author/:author', async function (req, res) {
   }
 });
 
+// Task 13: Get book details based on Title using async-await
+public_users.get('/async/title/:title', async function (req, res) {
+  try {
+    const title = req.params.title;
+    
+    // Simulate an async operation using Promise
+    const getBooksByTitle = new Promise((resolve, reject) => {
+      const bookKeys = Object.keys(books);
+      const booksByTitle = [];
+      
+      bookKeys.forEach(key => {
+        if (books[key].title === title) {
+          booksByTitle.push(books[key]);
+        }
+      });
+      
+      if (booksByTitle.length > 0) {
+        resolve(booksByTitle);
+      } else {
+        reject(new Error("No books found with this title"));
+      }
+    });
+    
+    const bookList = await getBooksByTitle;
+    res.send(JSON.stringify(bookList, null, 4));
+  } catch (error) {
+    res.status(404).json({message: error.message});
+  }
+});
+
 module.exports.general = public_users;
